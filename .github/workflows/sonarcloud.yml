@@ -1,8 +1,8 @@
-name: Build
+name: SonarQube
 on:
   push:
     branches:
-      - main   # أو master لو فرعك اسمه كده
+      - main
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # مهم علشان التحليل يكون أدق
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
