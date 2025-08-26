@@ -1,20 +1,19 @@
-name: SonarCloud
-
+name: Build
 on:
   push:
     branches:
-      - main
+      - main   # أو master لو فرعك اسمه كده
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [opened, synchronize, reopened]
 
 jobs:
-  build:
-    name: Build and analyze
+  sonarqube:
+    name: SonarQube
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Required for analysis
+          fetch-depth: 0  # مهم علشان التحليل يكون أدق
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -26,8 +25,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint
 
-      - name: Run SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
